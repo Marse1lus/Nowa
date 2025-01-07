@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список турниров</title>
+    <link rel="stylesheet" href="{% static 'tournaments/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Модальное окно для входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <input type="password" placeholder="Подтвердите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="header" role="banner">
+        <div class="logo" role="heading" aria-level="1">
+            <a href="{% url 'home' %}" class="logo-link">
+                NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
+            </a>
+        </div>
+        <nav class="nav-menu" role="navigation" aria-label="Главное меню">
+            <a href="{% url 'tournament_list' %}" role="menuitem">Турниры</a>
+            
+            <div class="dropdown">
+                <a href="#" 
+                   class="nav-link" 
+                   role="button" 
+                   aria-haspopup="true" 
+                   aria-expanded="false"
+                   aria-controls="sections-menu">
+                    Секции ▼
+                </a>
+                <div class="dropdown-content" 
+                     id="sections-menu" 
+                     role="menu" 
+                     aria-label="Выбор секции">
+                    <a href="#" role="menuitem">Маметова</a>
+                    <a href="#" role="menuitem">Жансугурова</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" 
+                   class="nav-link" 
+                   role="button" 
+                   aria-haspopup="true" 
+                   aria-expanded="false"
+                   aria-controls="about-menu">
+                    О нас ▼
+                </a>
+                <div class="dropdown-content" 
+                     id="about-menu" 
+                     role="menu" 
+                     aria-label="О нас">
+                    <a href="https://teamnova.kz/p/d9b54a/" role="menuitem"> Одежда</a>        
+                    <a href="#" role="menuitem">Галерея</a>
+                    <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
+                </div>
+            </div>
+
+            <a href="#" class="signup" role="button">Войти</a>
+            <a href="#" class="signup" role="button">Создать аккаунт</a>
+        </nav>
+    </div>
+
+    <div class="tournaments-container">
+        <h1>Турниры</h1>
+        
+        <div class="filters">
+            <a href="?status=upcoming" class="filter-btn">Предстоящие</a>
+            <a href="?status=ongoing" class="filter-btn">Текущие</a>
+            <a href="?status=completed" class="filter-btn">Завершенные</a>
+        </div>
+
+        <div class="tournaments-grid">
+            {% for tournament in tournaments %}
+            <div class="tournament-card">
+                <h2>{{ tournament.title }}</h2>
+                <div class="tournament-type">{{ tournament.get_tournament_type_display }}</div>
+                <div class="tournament-dates">
+                    <span>Начало: {{ tournament.start_date|date:"d.m.Y H:i" }}</span>
+                    <span>Окончание: {{ tournament.end_date|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="tournament-location">{{ tournament.location }}</div>
+                <div class="tournament-status {{ tournament.status }}">
+                    {{ tournament.get_status_display }}
+                </div>
+                {% if tournament.is_registration_open %}
+                <a href="#" class="register-btn">Зарегистрироваться</a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="no-tournaments">Нет доступных турниров.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.querySelectorAll('.signup')[0];
+            const registerBtn = document.querySelectorAll('.signup')[1];
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            const closeButtons = document.getElementsByClassName('close');
+
+            // Функция для открытия модального окна
+            function openModal(modal) {
+                modal.style.display = "block";
+                modal.setAttribute('aria-hidden', 'false');
+                modal.querySelector('input').focus();
+            }
+
+            // Функция для закрытия модального окна
+            function closeModal(modal) {
+                modal.style.display = "none";
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            // Открытие модальных окон
+            loginBtn.onclick = function(e) {
+                e.preventDefault();
+                openModal(loginModal);
+            }
+
+            registerBtn.onclick = function(e) {
+                e.preventDefault();
+                openModal(registerModal);
+            }
+
+            // Закрытие модальных окон
+            Array.from(closeButtons).forEach(button => {
+                button.onclick = function() {
+                    closeModal(loginModal);
+                    closeModal(registerModal);
+                }
+            });
+
+            // Закрытие при клике вне модального окна
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    closeModal(loginModal);
+                }
+                if (event.target == registerModal) {
+                    closeModal(registerModal);
+                }
+            }
+
+            // Закрытие по клавише Esc
+            window.onkeydown = function(event) {
+                if (event.key === 'Escape') {
+                    closeModal(loginModal);
+                    closeModal(registerModal);
+                }
+            }
+        });
+
+        // Обработка форм
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Здесь будет логика входа
+            console.log('Выполняется вход');
+        }
+
+        document.getElementById('registerForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Здесь будет логика регистрации
+            console.log('Выполняется регистрация');
+        }
+    </script>
+</body>
+</html> 

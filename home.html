@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NOVACUP 🤼‍♂️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'tournaments/homestyles.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #000000 url('{% static "tournaments/images/nowa.png" %}') center center/contain no-repeat;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            background: #000000 url('{% static "tournaments/images/riz.jpg" %}') center center/cover no-repeat;
+            margin-top: 70px;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .scroll-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            background: #000000 url('{% static "tournaments/images/nowa.png" %}') center center/contain no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+    <!-- <meta http-equiv="refresh" content="0; URL='turniers.html'"> -->
+</head>
+<body>
+    <!-- Модальное окно для входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <input type="password" placeholder="Подтвердите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="header" role="banner">
+        <div class="logo" role="heading" aria-level="1">
+            <a href="NOWA.html" class="logo-link">
+                NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
+            </a>
+        </div>
+        <nav class="nav-menu" role="navigation" aria-label="Главное меню">
+            <a href="{% url 'tournament_list' %}" role="menuitem">Турниры</a>
+            
+            <div class="dropdown">
+                <a href="#" 
+                   class="nav-link" 
+                   role="button" 
+                   aria-haspopup="true" 
+                   aria-expanded="false"
+                   aria-controls="sections-menu">
+                    Секции ▼
+                </a>
+                <div class="dropdown-content" 
+                     id="sections-menu" 
+                     role="menu" 
+                     aria-label="Выбор секции">
+                    <a href="#" role="menuitem">Маметова</a>
+                    <a href="#" role="menuitem">Жансугурова</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" 
+                   class="nav-link" 
+                   role="button" 
+                   aria-haspopup="true" 
+                   aria-expanded="false"
+                   aria-controls="about-menu">
+                    О нас ▼
+                </a>
+                <div class="dropdown-content" 
+                     id="about-menu" 
+                     role="menu" 
+                     aria-label="О нас">
+                    <a href="https://teamnova.kz/p/d9b54a/" role="menuitem"> Одежда</a>        
+                    <a href="#" role="menuitem">Галерея</a>
+                    <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
+                </div>
+            </div>
+
+            <a href="#" class="signup" role="button">Войти</a>
+            <a href="#" class="signup" role="button">Создать аккаунт</a>
+        </nav>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-text">
+            <h1>После проверки силы<br>проверяется характер</h1>
+            <div class="hero-buttons">
+                <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ" 
+                   class="hero-button" 
+                   target="_blank">
+                    Записаться
+                </a>
+                
+            </div>
+        </div>
+
+        <!-- Комментируем блок с тренерами
+        <div class="trainers-box">
+            <h2>Наши тренера</h2>
+            <div class="trainer">
+                <img src="{% static 'tournaments/kud.png' %}" alt="Тренер 1">
+                <h3>Kudrin Vladimir</h3>
+                <p>Главный тренер</p>
+            </div>
+            <div class="trainer">
+                <img src="{% static 'tournaments/dos.png' %}" alt="Тренер 2">
+                <h3>Razak Zhandos</h3>
+                <p>Старший тренер</p>
+            </div>
+        </div>
+        -->
+    </div>
+
+    <div class="scroll-section">
+        <div class="hero-text">
+            <h1>Характер куется в разных кузницах<br>найди свою</h1>
+        </div>
+    </div>
+
+    <script>
+        // Обновляем обработчики для всех выпадающих меню
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.setAttribute('aria-expanded', 
+                        this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+                }
+            });
+        });
+
+        const loginBtn = document.querySelector('a[href="#"].signup');
+        const registerBtn = document.querySelectorAll('a[href="#"].signup')[1];
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeButtons = document.getElementsByClassName('close');
+
+        // Открытие модальных окон
+        loginBtn.onclick = function(e) {
+            e.preventDefault();
+            loginModal.style.display = "block";
+        }
+
+        registerBtn.onclick = function(e) {
+            e.preventDefault();
+            registerModal.style.display = "block";
+        }
+
+        // Закрытие модальных окон
+        Array.from(closeButtons).forEach(button => {
+            button.onclick = function() {
+                loginModal.style.display = "none";
+                registerModal.style.display = "none";
+            }
+        });
+
+        // Закрытие при клике вне модального окна
+        window.onclick = function(event) {
+            if (event.target == loginModal || event.target == registerModal) {
+                loginModal.style.display = "none";
+                registerModal.style.display = "none";
+            }
+        }
+
+        // Обработка форм
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Здесь будет логика входа
+            console.log('Выполняется вход');
+        }
+
+        document.getElementById('registerForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Здесь будет логика регистрации
+            console.log('Выполняется регистрация');
+        }
+
+        window.addEventListener('scroll', function() {
+            const scrollSection = document.querySelector('.scroll-section');
+            const heroSection = document.querySelector('.hero-section');
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // Вычисляем прогресс скролла
+            const scrollProgress = scrollPosition / windowHeight;
+            
+            // Применяем прозрачность
+            if (scrollProgress <= 1) {
+                heroSection.style.opacity = 1 - scrollProgress;
+                scrollSection.style.opacity = scrollProgress;
+            }
+        });
+    </script>
+</body>
+</html>
