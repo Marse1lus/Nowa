@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="header" role="banner">
+    <header class="header" role="banner">
         <div class="logo" role="heading" aria-level="1">
             <a href="{% url 'home' %}" class="logo-link">
                 NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
@@ -86,39 +86,66 @@
             <a href="#" class="signup" role="button">Войти</a>
             <a href="#" class="signup" role="button">Создать аккаунт</a>
         </nav>
-    </div>
+    </header>
 
-    <div class="tournaments-container">
-        <h1>Турниры</h1>
-        
+    <main>
         <div class="filters">
-            <a href="?status=upcoming" class="filter-btn">Предстоящие</a>
-            <a href="?status=ongoing" class="filter-btn">Текущие</a>
-            <a href="?status=completed" class="filter-btn">Завершенные</a>
+            <button class="filter-btn">Предстоящие турниры</button>
+            <button class="filter-btn">Текущие турниры</button>
+            <button class="filter-btn">Ваши турниры</button>
         </div>
 
-        <div class="tournaments-grid">
-            {% for tournament in tournaments %}
-            <div class="tournament-card">
-                <h2>{{ tournament.title }}</h2>
-                <div class="tournament-type">{{ tournament.get_tournament_type_display }}</div>
-                <div class="tournament-dates">
-                    <span>Начало: {{ tournament.start_date|date:"d.m.Y H:i" }}</span>
-                    <span>Окончание: {{ tournament.end_date|date:"d.m.Y H:i" }}</span>
-                </div>
-                <div class="tournament-location">{{ tournament.location }}</div>
-                <div class="tournament-status {{ tournament.status }}">
-                    {{ tournament.get_status_display }}
-                </div>
-                {% if tournament.is_registration_open %}
-                <a href="#" class="register-btn">Зарегистрироваться</a>
-                {% endif %}
-            </div>
-            {% empty %}
-            <div class="no-tournaments">Нет доступных турниров.</div>
-            {% endfor %}
+        <div class="button-container">
+            <button class="nav-btn" onclick="window.location.href='/create-tournament'">Создать турнир</button>
+            <button class="nav-btn" onclick="window.location.href='/nearest-section'">Ближайшая секция</button>
+            <button class="nav-btn" onclick="window.location.href='/map'">Карта</button>
         </div>
-    </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Найти турнир">
+            <select class="search-input">
+                <option value="">Тип турнира</option>
+                <option value="greco">Греко-римская борьба</option>
+                <option value="freestyle">Вольная борьба</option>
+                <option value="judo">Дзюдо</option>
+                <option value="bjj">BJJ</option>
+            </select>
+        </div>
+
+        <div class="date-container">
+            <input type="date" class="date-input" placeholder="Дата начала">
+            <input type="date" class="date-input" placeholder="Конец даты">
+            <button class="search-btn">Поиск</button>
+        </div>
+
+        <div class="tournaments-container">
+            <h1>Добавить турнир</h1>
+            <form method="post" action="{% url 'tournament_list' %}" class="tournament-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="form-control">Добавить</button>
+            </form>
+
+            <h2>Список турниров</h2>
+            <div class="tournaments-grid">
+                {% for tournament in tournaments %}
+                <div class="tournament-card">
+                    <h2>{{ tournament.name }}</h2>
+                    <div class="tournament-dates">
+                        <span>Дата: {{ tournament.date|date:"d.m.Y" }}</span>
+                    </div>
+                    <div class="tournament-location">{{ tournament.location }}</div>
+                </div>
+                {% empty %}
+                <div class="no-tournaments">Нет доступных турниров.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Здесь можно добавить информацию о сайте или контактные данные -->
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -127,18 +154,23 @@
             const loginModal = document.getElementById('loginModal');
             const registerModal = document.getElementById('registerModal');
             const closeButtons = document.getElementsByClassName('close');
+            const navLinks = document.querySelectorAll('.nav-link');
 
             // Функция для открытия модального окна
             function openModal(modal) {
                 modal.style.display = "block";
+                modal.style.opacity = "1";
                 modal.setAttribute('aria-hidden', 'false');
                 modal.querySelector('input').focus();
             }
 
             // Функция для закрытия модального окна
             function closeModal(modal) {
-                modal.style.display = "none";
-                modal.setAttribute('aria-hidden', 'true');
+                modal.style.opacity = "0";
+                setTimeout(() => {
+                    modal.style.display = "none";
+                    modal.setAttribute('aria-hidden', 'true');
+                }, 300);
             }
 
             // Открытие модальных окон
@@ -177,6 +209,16 @@
                     closeModal(registerModal);
                 }
             }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    const menu = document.getElementById(this.getAttribute('aria-controls'));
+                    menu.style.display = expanded ? 'none' : 'block';
+                });
+            });
         });
 
         // Обработка форм
@@ -191,6 +233,30 @@
             // Здесь будет логика регистрации
             console.log('Выполняется регистрация');
         }
+
+        const dateInputs = document.querySelectorAll('.date-input');
+
+        dateInputs.forEach(input => {
+            const placeholder = input.getAttribute('placeholder');
+
+            input.addEventListener('focus', function() {
+                if (this.value === '') {
+                    this.setAttribute('data-placeholder', placeholder);
+                    this.removeAttribute('placeholder');
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.setAttribute('placeholder', this.getAttribute('data-placeholder'));
+                }
+            });
+
+            // Инициализация
+            if (input.value === '') {
+                input.setAttribute('placeholder', placeholder);
+            }
+        });
     </script>
 </body>
 </html> 
