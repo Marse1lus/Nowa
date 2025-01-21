@@ -1,14 +1,34 @@
+body {
+    background-image: url('/static/tournaments/register.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.intro-text {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 250px auto;
+    color: #fff;
+}
+
 .container {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 300px;
+    margin: 10px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: transparent;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    box-shadow: none;
 }
 
 h1 {
     text-align: center;
+    color: #333;
+}
+
+h2 {
+    font-size: 2em;
     color: #333;
 }
 
@@ -30,7 +50,7 @@ h1 {
 
 .tournaments-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #000000;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -42,11 +62,12 @@ h1 {
 }
 
 .tournament-card {
-    background-color: #fff;
+    background-color: #000000;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     padding: 15px;
     text-align: center;
+    font-size: 1.2em;
 }
 
 .tournament-dates,
@@ -59,4 +80,60 @@ h1 {
     text-align: center;
     color: #999;
     font-style: italic;
+}
+
+.form-input-wrapper {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.form-input-text {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-input-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.modal-content {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
