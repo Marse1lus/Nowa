@@ -1,37 +1,74 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Создать турнир</title>
-    {% load static %}
+    <link rel="stylesheet" href="{% static 'tournaments/styles.css' %}">
     <link rel="stylesheet" href="{% static 'tournaments/create.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Добавить турнир</h1>
-        <form method="post" action="{% url 'create' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="form-control">Добавить</button>
-        </form>
-    </div>
-
-    <div class="tournaments-container">
-        <h2>Список турниров</h2>
-        <div class="tournaments-grid">
-            {% for tournament in tournaments %}
-            <div class="tournament-card">
-                <h2>{{ tournament.name }}</h2>
-                <div class="tournament-dates">
-                    <span>Дата: {{ tournament.date|date:"d.m.Y" }}</span>
-                </div>
-                <div class="tournament-location">{{ tournament.location }}</div>
-            </div>
-            {% empty %}
-            <div class="no-tournaments">Нет доступных турниров.</div>
-            {% endfor %}
+<body style="background-image: url('{% static 'tournaments/images/register.jpg' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <header class="header" role="banner">
+        <div class="logo" role="heading" aria-level="1">
+            <a href="{% url 'home' %}" class="logo-link">
+                NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
+            </a>
         </div>
-    </div>
+        <nav class="nav-menu" role="navigation" aria-label="Главное меню">
+            <a href="{% url 'tournament_list' %}" role="menuitem">Турниры</a>
+            <div class="dropdown">
+                <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="sections-menu">
+                    Секции ▼
+                </a>
+                <div class="dropdown-content" id="sections-menu" role="menu" aria-label="Выбор секции">
+                    <a href="#" role="menuitem">Маметова</a>
+                    <a href="#" role="menuitem">Жансугурова</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu">
+                    О нас ▼
+                </a>
+                <div class="dropdown-content" id="about-menu" role="menu" aria-label="О нас">
+                    <a href="https://teamnova.kz/p/d9b54a/" role="menuitem"> Одежда</a>        
+                    <a href="#" role="menuitem">Галерея</a>
+                    <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
+                </div>
+            </div>
+            <a href="#" class="signup" role="button">Войти</a>
+            <a href="#" class="signup" role="button">Создать аккаунт</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="intro-text">
+            Поле боя самое место чтобы проверить кузницу
+        </div>
+
+        <div class="container">
+          
+            <form method="post" action="{% url 'create' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="form-control">Добавить</button>
+            </form>
+        </div>
+
+        <div class="tournaments-container">
+            <h2>Список турниров</h2>
+            <div class="tournaments-grid">
+                {% for tournament in tournaments %}
+                <div class="tournament-card">
+                    <h2>Новое название турнира</h2>
+                </div>
+                {% empty %}
+                <div class="no-tournaments">Нет доступных турниров.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
 
     <footer>
         <!-- Здесь можно добавить информацию о сайте или контактные данные -->
