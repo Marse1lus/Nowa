@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- Модальное окно для входа -->
-    <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Вход</h2>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Модальное окно для регистрации -->
-    <div id="registerModal" class="modal">
+    <div id="registerModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Регистрация</h2>
@@ -83,8 +83,8 @@
                 </div>
             </div>
 
-            <a href="#" class="signup" role="button">Войти</a>
-            <a href="#" class="signup" role="button">Создать аккаунт</a>
+            <a href="#" class="signup">Войти</a>
+            <a href="#" class="signup">Создать аккаунт</a>
         </nav>
     </header>
 
@@ -96,7 +96,7 @@
         </div>
 
         <div class="button-container">
-            <button class="nav-btn" onclick="window.location.href='/create-tournament'">Создать турнир</button>
+            <button class="nav-btn" onclick="window.location.href='{% url 'create' %}'">Создать турнир</button>
             <button class="nav-btn" onclick="window.location.href='/nearest-section'">Ближайшая секция</button>
             <button class="nav-btn" onclick="window.location.href='/map'">Карта</button>
         </div>
@@ -118,145 +118,6 @@
             <button class="search-btn">Поиск</button>
         </div>
 
-        <div class="tournaments-container">
-            <h1>Добавить турнир</h1>
-            <form method="post" action="{% url 'tournament_list' %}" class="tournament-form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="form-control">Добавить</button>
-            </form>
-
-            <h2>Список турниров</h2>
-            <div class="tournaments-grid">
-                {% for tournament in tournaments %}
-                <div class="tournament-card">
-                    <h2>{{ tournament.name }}</h2>
-                    <div class="tournament-dates">
-                        <span>Дата: {{ tournament.date|date:"d.m.Y" }}</span>
-                    </div>
-                    <div class="tournament-location">{{ tournament.location }}</div>
-                </div>
-                {% empty %}
-                <div class="no-tournaments">Нет доступных турниров.</div>
-                {% endfor %}
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <!-- Здесь можно добавить информацию о сайте или контактные данные -->
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginBtn = document.querySelectorAll('.signup')[0];
-            const registerBtn = document.querySelectorAll('.signup')[1];
-            const loginModal = document.getElementById('loginModal');
-            const registerModal = document.getElementById('registerModal');
-            const closeButtons = document.getElementsByClassName('close');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            // Функция для открытия модального окна
-            function openModal(modal) {
-                modal.style.display = "block";
-                modal.style.opacity = "1";
-                modal.setAttribute('aria-hidden', 'false');
-                modal.querySelector('input').focus();
-            }
-
-            // Функция для закрытия модального окна
-            function closeModal(modal) {
-                modal.style.opacity = "0";
-                setTimeout(() => {
-                    modal.style.display = "none";
-                    modal.setAttribute('aria-hidden', 'true');
-                }, 300);
-            }
-
-            // Открытие модальных окон
-            loginBtn.onclick = function(e) {
-                e.preventDefault();
-                openModal(loginModal);
-            }
-
-            registerBtn.onclick = function(e) {
-                e.preventDefault();
-                openModal(registerModal);
-            }
-
-            // Закрытие модальных окон
-            Array.from(closeButtons).forEach(button => {
-                button.onclick = function() {
-                    closeModal(loginModal);
-                    closeModal(registerModal);
-                }
-            });
-
-            // Закрытие при клике вне модального окна
-            window.onclick = function(event) {
-                if (event.target == loginModal) {
-                    closeModal(loginModal);
-                }
-                if (event.target == registerModal) {
-                    closeModal(registerModal);
-                }
-            }
-
-            // Закрытие по клавише Esc
-            window.onkeydown = function(event) {
-                if (event.key === 'Escape') {
-                    closeModal(loginModal);
-                    closeModal(registerModal);
-                }
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const expanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', !expanded);
-                    const menu = document.getElementById(this.getAttribute('aria-controls'));
-                    menu.style.display = expanded ? 'none' : 'block';
-                });
-            });
-        });
-
-        // Обработка форм
-        document.getElementById('loginForm').onsubmit = function(e) {
-            e.preventDefault();
-            // Здесь будет логика входа
-            console.log('Выполняется вход');
-        }
-
-        document.getElementById('registerForm').onsubmit = function(e) {
-            e.preventDefault();
-            // Здесь будет логика регистрации
-            console.log('Выполняется регистрация');
-        }
-
-        const dateInputs = document.querySelectorAll('.date-input');
-
-        dateInputs.forEach(input => {
-            const placeholder = input.getAttribute('placeholder');
-
-            input.addEventListener('focus', function() {
-                if (this.value === '') {
-                    this.setAttribute('data-placeholder', placeholder);
-                    this.removeAttribute('placeholder');
-                }
-            });
-
-            input.addEventListener('blur', function() {
-                if (this.value === '') {
-                    this.setAttribute('placeholder', this.getAttribute('data-placeholder'));
-                }
-            });
-
-            // Инициализация
-            if (input.value === '') {
-                input.setAttribute('placeholder', placeholder);
-            }
-        });
-    </script>
+       
 </body>
 </html> 

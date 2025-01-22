@@ -37,8 +37,8 @@
                     <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
                 </div>
             </div>
-            <a href="#" class="signup" role="button">Войти</a>
-            <a href="#" class="signup" role="button">Создать аккаунт</a>
+            <a href="#" class="signup">Войти</a>
+            <a href="#" class="signup">Создать аккаунт</a>
         </nav>
     </header>
 
@@ -47,32 +47,36 @@
             Поле боя самое место чтобы проверить кузницу
         </div>
 
-        <div class="container">
-          
-            <form method="post" action="{% url 'create' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="form-control">Добавить</button>
-            </form>
-        </div>
+      
+        <!--
+        <form method="post" action="{% url 'create' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="form-control">Добавить</button>
+        </form>
 
         <div class="tournaments-container">
             <h2>Список турниров</h2>
             <div class="tournaments-grid">
-                {% for tournament in tournaments %}
                 <div class="tournament-card">
                     <h2>Новое название турнира</h2>
                 </div>
-                {% empty %}
-                <div class="no-tournaments">Нет доступных турниров.</div>
-                {% endfor %}
             </div>
         </div>
+        -->
     </main>
 
     <footer>
         <!-- Здесь можно добавить информацию о сайте или контактные данные -->
     </footer>
+
+    <div id="loginModal" class="modal" aria-hidden="true">
+        <!-- Содержимое модального окна для входа -->
+    </div>
+
+    <div id="registerModal" class="modal" aria-hidden="true">
+        <!-- Содержимое модального окна для регистрации -->
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
