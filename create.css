@@ -24,6 +24,7 @@ body {
 
 h1 {
     text-align: center;
+    font-size: 2em;
     color: #333;
 }
 
@@ -62,12 +63,11 @@ h2 {
 }
 
 .tournament-card {
-    background-color: #000000;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
     text-align: center;
-    font-size: 1.2em;
 }
 
 .tournament-dates,
@@ -102,26 +102,28 @@ h2 {
     font-weight: bold;
 }
 
-.modal-content {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: none;
-}
-
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1001;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: rgba(16, 25, 203, 0.9);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    position: relative;
+    color: white;
 }
 
 .close {
@@ -129,6 +131,7 @@ h2 {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .close:hover,
