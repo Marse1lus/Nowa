@@ -102,15 +102,6 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.tournaments-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
 .filters {
     margin: 20px 0;
     display: flex;
@@ -186,29 +177,6 @@ body {
 
 .filter-btn:hover {
     background-color: #0056b3;
-}
-
-.tournaments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.tournament-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.tournament-card:hover {
-    transform: translateY(-5px);
-}
-
-.tournament-type {
-    color: #666;
-    margin: 10px 0;
 }
 
 .modal {
