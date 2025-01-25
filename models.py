@@ -16,26 +16,33 @@ class Tournament(models.Model):
         ('bjj', 'BJJ'),
     ]
 
-    title = models.CharField(max_length=200, verbose_name='Название турнира')
-    tournament_type = models.CharField(max_length=20, choices=TOURNAMENT_TYPES, verbose_name='Тип турнира')
-    description = models.TextField(verbose_name='Описание', default='Описание отсутствует')
-    start_date = models.DateTimeField(verbose_name='Дата начала', default=timezone.now)
-    end_date = models.DateTimeField(verbose_name='Дата окончания', default=timezone.now)
-    location = models.CharField(max_length=200, verbose_name='Место проведения')
-    status = models.CharField(max_length=20, choices=TOURNAMENT_STATUS, default='upcoming', verbose_name='Статус')
-    registration_deadline = models.DateTimeField(verbose_name='Дедлайн регистрации', default=timezone.now)
-    max_participants = models.IntegerField(verbose_name='Максимальное количество участников', default=100)
-    current_participants = models.IntegerField(default=0, verbose_name='Текущее количество участников')
+    name = models.CharField(max_length=255)
+    date = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=255)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=TOURNAMENT_STATUS, default='upcoming')
+    registration_deadline = models.DateTimeField(default=timezone.now)
+    max_participants = models.IntegerField(default=100)
+    current_participants = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['start_date']
-        verbose_name = 'Турнир'
-        verbose_name_plural = 'Турниры'
+    organization_name = models.CharField(max_length=255)
+    company_info = models.TextField()
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    postal_code = models.CharField(max_length=20)
+    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='tournament_images/', blank=True, null=True)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
+    type = models.CharField(max_length=20, choices=TOURNAMENT_TYPES, default='greco')
 
     def __str__(self):
-        return self.title
+        return self.name
 
     @property
     def is_registration_open(self):
@@ -52,5 +59,5 @@ class Registration(models.Model):
         verbose_name_plural = 'Регистрации'
 
     def __str__(self):
-        return f"{self.user.username} - {self.tournament.title}"
+        return f"{self.user.username} - {self.tournament.name}"
 
