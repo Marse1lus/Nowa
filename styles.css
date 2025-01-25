@@ -1,6 +1,15 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #0056b3;
+    --background-color: #000;
+    --text-color: #fff;
+    --highlight-color: #ff0000;
+    --modal-background: rgba(16, 25, 203, 0.9);
+}
+
 body {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -29,15 +38,15 @@ body {
     font-size: 28px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #fff;
+    color: var(--text-color);
 }
 
 .highlight-w {
     font-size: 38px;
-    color: #ff0000;
+    color: var(--highlight-color);
     text-shadow: 0 0 5px #fff,
-                 0 0 10px #ff0000,
-                 0 0 15px #ff0000;
+                 0 0 10px var(--highlight-color),
+                 0 0 15px var(--highlight-color);
 }
 
 .nav-menu {
@@ -48,7 +57,7 @@ body {
 }
 
 .nav-menu a {
-    color: #ffffff;
+    color: var(--text-color);
     text-decoration: none;
     padding: 8px 15px;
     border-radius: 4px;
@@ -72,7 +81,7 @@ body {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: rgba(16, 25, 203, 0.9);
+    background-color: var(--modal-background);
     backdrop-filter: blur(5px);
     min-width: 150px;
     border-radius: 5px;
@@ -88,7 +97,7 @@ body {
 }
 
 .dropdown-content a {
-    color: white;
+    color: var(--text-color);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -127,7 +136,7 @@ body {
     border: 1px solid #444;
     border-radius: 15px;
     background-color: #333;
-    color: #fff;
+    color: var(--text-color);
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -152,8 +161,8 @@ body {
     width: 100px;
     height: 40px;
     padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
     border-radius: 15px;
     cursor: pointer;
@@ -161,13 +170,13 @@ body {
 }
 
 .search-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
 }
 
 .filter-btn {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
     border-radius: 5px;
     text-decoration: none;
@@ -176,7 +185,7 @@ body {
 }
 
 .filter-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
 }
 
 .modal {
@@ -199,7 +208,7 @@ body {
 }
 
 .modal-content {
-    background-color: rgba(16, 25, 203, 0.9);
+    background-color: var(--modal-background);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -207,7 +216,7 @@ body {
     max-width: 400px;
     border-radius: 10px;
     position: relative;
-    color: white;
+    color: var(--text-color);
     transform: translateY(-20px);
     transition: transform 0.3s ease;
 }
@@ -217,7 +226,7 @@ body {
 }
 
 .close {
-    color: #fff;
+    color: var(--text-color);
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -240,7 +249,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: var(--text-color);
 }
 
 .modal-content input::placeholder {
@@ -272,7 +281,7 @@ body {
 }
 
 h1 {
-    color: #ffffff;
+    color: var(--text-color);
     text-align: left;
     margin-bottom: 20px;
 }
@@ -284,7 +293,7 @@ h1 {
     border: 1px solid #444;
     border-radius: 5px;
     background-color: #333;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .form-control::placeholder {
@@ -297,7 +306,7 @@ button {
     background-color: #6200ea;
     border: none;
     border-radius: 5px;
-    color: #ffffff;
+    color: var(--text-color);
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -324,7 +333,7 @@ button:hover {
     border: 1px solid #444;
     border-radius: 15px;
     background-color: #333;
-    color: #fff;
+    color: var(--text-color);
 }
 
 .button-container {
@@ -340,8 +349,8 @@ button:hover {
 .nav-btn {
     width: 100px;
     padding: 5px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -350,5 +359,45 @@ button:hover {
 }
 
 .nav-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
+}
+
+.tournaments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.tournament-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.tournament-card:hover {
+    transform: translateY(-5px);
+}
+
+.tournament-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.tournament-info {
+    padding: 15px;
+}
+
+.tournament-info h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.tournament-info p {
+    color: #555;
+    margin: 5px 0;
 }
