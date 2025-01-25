@@ -64,6 +64,14 @@
             </div>
         </div>
         -->
+
+        <form method="post" enctype="multipart/form-data" action="{% url 'create' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- Удалите или закомментируйте это поле, если оно не нужно -->
+            <!-- <input type="date" name="date" class="form-control" required> -->
+            <button type="submit">Создать турнир</button>
+        </form>
     </main>
 
     <footer>
@@ -71,11 +79,29 @@
     </footer>
 
     <div id="loginModal" class="modal" aria-hidden="true">
-        <!-- Содержимое модального окна для входа -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
     </div>
 
     <div id="registerModal" class="modal" aria-hidden="true">
-        <!-- Содержимое модального окна для регистрации -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Имя" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Пароль" required>
+                <input type="password" placeholder="Подтвердите пароль" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -85,17 +111,13 @@
             const loginModal = document.getElementById('loginModal');
             const registerModal = document.getElementById('registerModal');
             const closeButtons = document.getElementsByClassName('close');
-            const navLinks = document.querySelectorAll('.nav-link');
 
-            // Функция для открытия модального окна
             function openModal(modal) {
                 modal.style.display = "block";
                 modal.style.opacity = "1";
                 modal.setAttribute('aria-hidden', 'false');
-                modal.querySelector('input').focus();
             }
 
-            // Функция для закрытия модального окна
             function closeModal(modal) {
                 modal.style.opacity = "0";
                 setTimeout(() => {
@@ -104,7 +126,6 @@
                 }, 300);
             }
 
-            // Открытие модальных окон
             loginBtn.onclick = function(e) {
                 e.preventDefault();
                 openModal(loginModal);
@@ -115,7 +136,6 @@
                 openModal(registerModal);
             }
 
-            // Закрытие модальных окон
             Array.from(closeButtons).forEach(button => {
                 button.onclick = function() {
                     closeModal(loginModal);
@@ -123,69 +143,11 @@
                 }
             });
 
-            // Закрытие при клике вне модального окна
             window.onclick = function(event) {
-                if (event.target == loginModal) {
-                    closeModal(loginModal);
-                }
-                if (event.target == registerModal) {
-                    closeModal(registerModal);
-                }
-            }
-
-            // Закрытие по клавише Esc
-            window.onkeydown = function(event) {
-                if (event.key === 'Escape') {
+                if (event.target == loginModal || event.target == registerModal) {
                     closeModal(loginModal);
                     closeModal(registerModal);
                 }
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const expanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', !expanded);
-                    const menu = document.getElementById(this.getAttribute('aria-controls'));
-                    menu.style.display = expanded ? 'none' : 'block';
-                });
-            });
-        });
-
-        // Обработка форм
-        document.getElementById('loginForm').onsubmit = function(e) {
-            e.preventDefault();
-            // Здесь будет логика входа
-            console.log('Выполняется вход');
-        }
-
-        document.getElementById('registerForm').onsubmit = function(e) {
-            e.preventDefault();
-            // Здесь будет логика регистрации
-            console.log('Выполняется регистрация');
-        }
-
-        const dateInputs = document.querySelectorAll('.date-input');
-
-        dateInputs.forEach(input => {
-            const placeholder = input.getAttribute('placeholder');
-
-            input.addEventListener('focus', function() {
-                if (this.value === '') {
-                    this.setAttribute('data-placeholder', placeholder);
-                    this.removeAttribute('placeholder');
-                }
-            });
-
-            input.addEventListener('blur', function() {
-                if (this.value === '') {
-                    this.setAttribute('placeholder', this.getAttribute('data-placeholder'));
-                }
-            });
-
-            // Инициализация
-            if (input.value === '') {
-                input.setAttribute('placeholder', placeholder);
             }
         });
     </script>
