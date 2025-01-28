@@ -37,8 +37,13 @@
                     <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
                 </div>
             </div>
-            <a href="#" class="signup">Войти</a>
-            <a href="#" class="signup">Создать аккаунт</a>
+            {% if user.is_authenticated %}
+                <span>Привет, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}" class="signup">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="signup">Войти</a>
+                <a href="{% url 'signup' %}" class="signup">Создать аккаунт</a>
+            {% endif %}
         </nav>
     </header>
 
@@ -78,6 +83,8 @@
         <!-- Здесь можно добавить информацию о сайте или контактные данные -->
     </footer>
 
+    <!-- Закомментированы модальные окна -->
+    <!--
     <div id="loginModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -103,8 +110,11 @@
             </form>
         </div>
     </div>
+    -->
 
     <script>
+        // Закомментирован JavaScript для модальных окон
+        /*
         document.addEventListener('DOMContentLoaded', function() {
             const loginBtn = document.querySelectorAll('.signup')[0];
             const registerBtn = document.querySelectorAll('.signup')[1];
@@ -150,6 +160,7 @@
                 }
             }
         });
+        */
     </script>
 </body>
 </html>

@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Модальное окно для входа -->
+    <!-- Закомментированы модальные окна -->
+    <!--
     <div id="loginModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -22,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно для регистрации -->
     <div id="registerModal" class="modal" aria-hidden="true">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -36,6 +36,7 @@
             </form>
         </div>
     </div>
+    -->
 
     <header class="header" role="banner">
         <div class="logo" role="heading" aria-level="1">
@@ -83,8 +84,13 @@
                 </div>
             </div>
 
-            <a href="#" class="signup">Войти</a>
-            <a href="#" class="signup">Создать аккаунт</a>
+            {% if user.is_authenticated %}
+                <span>Привет, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}" class="signup">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="signup">Войти</a>
+                <a href="{% url 'signup' %}" class="signup">Создать аккаунт</a>
+            {% endif %}
         </nav>
     </header>
 
@@ -142,6 +148,8 @@
         </div>
 
         <script>
+            // Закомментирован JavaScript для модальных окон
+            /*
             document.addEventListener('DOMContentLoaded', function() {
                 const loginBtn = document.querySelectorAll('.signup')[0];
                 const registerBtn = document.querySelectorAll('.signup')[1];
@@ -150,7 +158,7 @@
                 const closeButtons = document.getElementsByClassName('close');
                 const filterButtons = document.querySelectorAll('.filter-btn');
                 const searchInput = document.querySelector('.search-input[type="text"]');
-                const typeSelect = document.querySelector('.search-input[type="select"]');
+                const typeSelect = document.querySelector('select.search-input');
                 const dateInputs = document.querySelectorAll('.date-input');
                 const searchButton = document.querySelector('.search-btn');
 
@@ -239,6 +247,7 @@
                     });
                 }
             });
+            */
         </script>
     </main>
 </body>
