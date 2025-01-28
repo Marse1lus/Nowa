@@ -1,0 +1,72 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'tournaments/registration.css' %}">
+
+  <header class="header" role="banner">
+    <div class="logo" role="heading" aria-level="1">
+      <a href="{% url 'home' %}" class="logo-link">
+        NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
+      </a>
+    </div>
+    <nav class="nav-menu" role="navigation" aria-label="Главное меню">
+      <a href="{% url 'tournament_list' %}" role="menuitem">Турниры</a>
+      <div class="dropdown">
+        <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="sections-menu">
+          Секции ▼
+        </a>
+        <div class="dropdown-content" id="sections-menu" role="menu" aria-label="Выбор секции">
+          <a href="#" role="menuitem">Маметова</a>
+          <a href="#" role="menuitem">Жансугурова</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu">
+          О нас ▼
+        </a>
+        <div class="dropdown-content" id="about-menu" role="menu" aria-label="О нас">
+          <a href="https://teamnova.kz/p/d9b54a/" role="menuitem"> Одежда</a>        
+          <a href="#" role="menuitem">Галерея</a>
+          <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
+        </div>
+      </div>
+      <a href="{% url 'login' %}" class="signup">Войти</a>
+      <a href="{% url 'signup' %}" class="signup">Создать аккаунт</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h2>Вход</h2>
+    <form method="post" id="loginForm">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="{% url 'signup' %}">Зарегистрироваться</a></p>
+  </main>
+
+  <script>
+      document.getElementById('loginForm').addEventListener('submit', function(event) {
+          const username = document.querySelector('input[name="username"]').value;
+          const password = document.querySelector('input[name="password"]').value;
+
+          if (!username || !password) {
+              event.preventDefault();
+              alert('Пожалуйста, заполните все поля!');
+          }
+      });
+  </script>
+{% endblock %}
+
+<script>
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.setAttribute('aria-expanded', 
+                    this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            }
+        });
+    });
+</script>

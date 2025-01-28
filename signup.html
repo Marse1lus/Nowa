@@ -1,0 +1,100 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'tournaments/registration.css' %}">
+
+  <header class="header" role="banner">
+    <div class="logo" role="heading" aria-level="1">
+      <a href="{% url 'home' %}" class="logo-link">
+        NO<span class="highlight-w">W</span>ACHAMPIONSHIP 🤼‍♂️
+      </a>
+    </div>
+    <nav class="nav-menu" role="navigation" aria-label="Главное меню">
+      <a href="{% url 'tournament_list' %}" role="menuitem">Турниры</a>
+      <div class="dropdown">
+        <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="sections-menu">
+          Секции ▼
+        </a>
+        <div class="dropdown-content" id="sections-menu" role="menu" aria-label="Выбор секции">
+          <a href="#" role="menuitem">Маметова</a>
+          <a href="#" role="menuitem">Жансугурова</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu">
+          О нас ▼
+        </a>
+        <div class="dropdown-content" id="about-menu" role="menu" aria-label="О нас">
+          <a href="https://teamnova.kz/p/d9b54a/" role="menuitem"> Одежда</a>        
+          <a href="#" role="menuitem">Галерея</a>
+          <a href="https://teamnova.kz/?fbclid=PAZXh0bgNhZW0CMTEAAabqvuAdlphCRMiUAHZdep2UTLlLhtCTS6DYdvksrVo9BqU0Xt3qHUsoojE_aem_M8j27ck8Z9D-t-2EcmU9aQ#contacts" role="menuitem" target="_blank">Контакты</a>
+        </div>
+      </div>
+      <a href="{% url 'login' %}" class="signup">Войти</a>
+      <a href="{% url 'signup' %}" class="signup">Создать аккаунт</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h2>Регистрация</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div>
+        <label for="id_username">Имя пользователя:</label>
+        <input type="text" name="username" id="id_username" required>
+      </div>
+      
+      <div>
+        <label for="id_email">Электронная почта:</label>
+        <input type="email" name="email" id="id_email" required>
+      </div>
+      
+      <div>
+        <label for="id_password">Пароль:</label>
+        <input type="password" name="password" id="id_password" required>
+      </div>
+      
+      <div>
+        <label for="id_confirm_password">Подтвердите пароль:</label>
+        <input type="password" name="confirm_password" id="id_confirm_password" required>
+      </div>
+      
+      <div>
+        <label for="id_bio">О себе:</label>
+        <textarea name="bio" id="id_bio"></textarea>
+      </div>
+      
+      <div>
+        <label for="id_profile_picture">Фото профиля:</label>
+        <input type="file" name="profile_picture" id="id_profile_picture">
+      </div>
+      
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+
+    {% if user_form.errors %}
+      <ul>
+        {% for field in user_form %}
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </main>
+
+  <script>
+      document.getElementById('signupForm').addEventListener('submit', function(event) {
+          const password = document.querySelector('input[name="password"]').value;
+          const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+
+          if (password !== confirmPassword) {
+              event.preventDefault();
+              alert('Пароли не совпадают!');
+          }
+      });
+  </script>
+{% endblock %}
